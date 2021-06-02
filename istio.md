@@ -1,12 +1,13 @@
 # Agenda
-
-## MicroService? 
+GitHub Repo: https://github.com/ilyas-it83/istiodemo2021
+## what are microservices? 
 
 "Services are small in size, messaging-enabled, bounded by contexts, autonomously developed, independently deployable,decentralized and built and released with automated processes" - WIKI
 
 ## Intro to Service Mesh
 
-"**A dedicated infrastructure layer for facilitating service-to-service communications between services or microservices, using a proxy**"
+**A service mesh is a dedicated infrastructure layer for facilitating service-to-service communications between services or microservices,using a proxy.**
+
 
 ![Intro to Service Mesh](https://res.cloudinary.com/stackrox/v1564617364/servicemesh2_my8hwn.png "Intro to Service Mesh")
 
@@ -14,6 +15,9 @@
 
 ![Intro to Service Mesh](https://www.redhat.com/cms/managed-files/service-mesh-1680.png "Intro to Service Mesh")
 
+![Intro to Service Mesh](https://dz2cdn1.dzone.com/storage/article-thumb/11927340-thumb.jpg "Intro to Service Mesh")
+
+Source: DZone
 
 ## Intro to Istio
 
@@ -102,10 +106,10 @@ istioctl verify-install
 
 ```bash {cmd}
 # Create namespace
-kubectl create ns globalazure
+kubectl create ns istiodemo
 
 # Set the namespace
-kubectl config set-context --current --namespace=globalazure
+kubectl config set-context --current --namespace=istiodemo
 
 # Validate it
 kubectl config view --minify | grep namespace:
@@ -114,19 +118,19 @@ kubectl config view --minify | grep namespace:
 <p style="color:red">Step 3: Add label to the target namespace to enable automatic side-car injection </p>
 
 ```bash {cmd}
-kubectl label namespace globalazure istio-injection=enabled
+kubectl label namespace istiodemo istio-injection=enabled
 
-kubectl get ns globalazure --show-labels
+kubectl get ns istiodemo --show-labels
 
 ```
 
 <p style="color:red">Step 4:  Deploy the sample application</p>
 
 ```bash {cmd}
-kubectl apply -f 1_bookinfo.yaml -n globalazure
+kubectl apply -f 1_bookinfo.yaml -n istiodemo
 
 # Check if all the pods,services are up and running
-kubectl get all -n globalazure 
+kubectl get all -n istiodemo 
 
 # check the rating pod for its readiness
 
@@ -140,10 +144,10 @@ http://localhost/productpage
 ```bash {cmd}
 # Create Ingress Gateway and Virtual Service
 
-kubectl apply -f 2_bookinfo-gateway.yaml -n globalazure 
+kubectl apply -f 2_bookinfo-gateway.yaml -n istiodemo 
 
 # Check if there is any issue with the ingress
-istioctl analyze -n globalazure  
+istioctl analyze -n istiodemo  
 
 # Getting Ingress IP & Port
 kubectl get svc istio-ingressgateway -n istio-system
